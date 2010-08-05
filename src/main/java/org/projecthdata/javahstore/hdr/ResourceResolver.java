@@ -27,9 +27,11 @@ class ResourceResolver implements LSInput {
   
   String systemId, path;
 
+  final static String SCHEMA_PATH = "/org/projecthdata/schemas/";
+
   ResourceResolver(String systemId, String path) {
     this.systemId = systemId;
-    this.path = path;
+    this.path = SCHEMA_PATH+path;
   }
 
   @Override

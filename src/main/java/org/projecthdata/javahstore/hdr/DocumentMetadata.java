@@ -100,7 +100,7 @@ public class DocumentMetadata {
     if (s==null) {
       SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       sf.setResourceResolver(new SchemaImportResolver());
-      s = sf.newSchema(DocumentMetadata.class.getResource("/section_metadata.xsd"));
+      s = sf.newSchema(DocumentMetadata.class.getResource(ResourceResolver.SCHEMA_PATH+"section_metadata.xsd"));
     }
     return s.newValidator();
   }
@@ -177,15 +177,15 @@ public class DocumentMetadata {
       if (namespaceURI!=null && namespaceURI.equals("http://www.w3.org/2000/09/xmldsig#")) {
         return new ResourceResolver(
                 "http://www.w3.org/TR/2008/REC-xmldsig-core-20080610/xmldsig-core-schema.xsd",
-                "/xmldsig-core-schema.xsd");
+                "xmldsig-core-schema.xsd");
       } else if (systemId!=null && systemId.equals("http://www.w3.org/2001/XMLSchema.dtd")) {
         return new ResourceResolver(
                 "http://www.w3.org/2001/XMLSchema.dtd",
-                "/XMLSchema.dtd");
+                "XMLSchema.dtd");
       } else if (systemId!=null && systemId.equals("datatypes.dtd")) {
         return new ResourceResolver(
                 "datatypes.dtd",
-                "/datatypes.dtd");
+                "datatypes.dtd");
       } else {
         return null;
       }
