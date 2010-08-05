@@ -17,8 +17,6 @@ package org.projecthdata.javahstore.hdr;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -177,60 +175,17 @@ public class DocumentMetadata {
     @Override
     public LSInput resolveResource(String type, String namespaceURI, String publicId, String systemId, final String baseURI) {
       if (namespaceURI!=null && namespaceURI.equals("http://www.w3.org/2000/09/xmldsig#")) {
-        return new LSInput() {
-
-          @Override
-          public Reader getCharacterStream() { return null; }
-
-          @Override
-          public void setCharacterStream(Reader characterStream) {}
-
-          @Override
-          public InputStream getByteStream() {
-            return DocumentMetadata.class.getResourceAsStream("/xmldsig-core-schema.xsd");
-          }
-
-          @Override
-          public void setByteStream(InputStream byteStream) {}
-
-          @Override
-          public String getStringData() { return null; }
-
-          @Override
-          public void setStringData(String stringData) {}
-
-          @Override
-          public String getSystemId() {
-            return "http://www.w3.org/TR/2008/REC-xmldsig-core-20080610/xmldsig-core-schema.xsd";
-          }
-
-          @Override
-          public void setSystemId(String systemId) {}
-
-          @Override
-          public String getPublicId() { return null; }
-
-          @Override
-          public void setPublicId(String publicId) {}
-
-          @Override
-          public String getBaseURI() { return null; }
-
-          @Override
-          public void setBaseURI(String baseURI) {}
-
-          @Override
-          public String getEncoding() { return "utf-8"; }
-
-          @Override
-          public void setEncoding(String encoding) {}
-
-          @Override
-          public boolean getCertifiedText() { return true; }
-
-          @Override
-          public void setCertifiedText(boolean certifiedText) {}
-        };
+        return new ResourceResolver(
+                "http://www.w3.org/TR/2008/REC-xmldsig-core-20080610/xmldsig-core-schema.xsd",
+                "/xmldsig-core-schema.xsd");
+      } else if (systemId!=null && systemId.equals("http://www.w3.org/2001/XMLSchema.dtd")) {
+        return new ResourceResolver(
+                "http://www.w3.org/2001/XMLSchema.dtd",
+                "/XMLSchema.dtd");
+      } else if (systemId!=null && systemId.equals("datatypes.dtd")) {
+        return new ResourceResolver(
+                "datatypes.dtd",
+                "/datatypes.dtd");
       } else {
         return null;
       }
