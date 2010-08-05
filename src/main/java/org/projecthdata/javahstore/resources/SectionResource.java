@@ -16,6 +16,7 @@
 package org.projecthdata.javahstore.resources;
 
 import com.sun.jersey.api.NotFoundException;
+import com.sun.jersey.core.header.ContentDisposition;
 import com.sun.jersey.multipart.BodyPart;
 import com.sun.jersey.multipart.MultiPart;
 import java.io.IOException;
@@ -95,10 +96,11 @@ public class SectionResource {
     InputStream content = null;
     String mediaType = null;
     for (BodyPart part: multipart.getBodyParts()) {
-      if (part.getHeaders().getFirst("Content-ID").equals("content")) {
+      ContentDisposition cd = part.getContentDisposition();
+      if (cd.getFileName().equals("content")) {
         mediaType = part.getMediaType().toString();
         content = part.getEntityAs(InputStream.class);
-      } else if (part.getHeaders().getFirst("Content-ID").equals("metadata")) {
+      } else if (cd.getFileName().equals("metadata")) {
         metadata = new DocumentMetadata(part.getEntityAs(String.class));
       }
     }

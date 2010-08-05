@@ -51,7 +51,7 @@ public class DocumentMetadataTest {
   }
 
   private static final String TEST_AUTHOR = "Fred Bloggs";
-  private static final String TEST_METADATA = "<DocumentMetaData xmlns='http://projecthdata.org/hdata/schemas/2009/11/metadata'>"
+  public static final String TEST_METADATA = "<DocumentMetaData xmlns='http://projecthdata.org/hdata/schemas/2009/11/metadata'>"
           + "<PedigreeInfo>"
           + "<Author>"
           + TEST_AUTHOR
