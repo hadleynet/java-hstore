@@ -67,7 +67,7 @@ public class RecordResourceTest extends JerseyTest {
     assertEquals("1", sections);
     String documents = xp.evaluate("count(/atom:feed/atom:entry[not(atom:category/@term='http://example.com/hdata/ext1')])", doc);
     assertEquals("1", documents);
-    String author = xp.evaluate("/atom:feed/atom:entry[not(atom:category/@term='http://example.com/hdata/ext1')][1]/atom:content/hdm:DocumentMetaData/PedigreeInfo/Author", doc);
+    String author = xp.evaluate("/atom:feed/atom:entry[not(atom:category/@term='http://example.com/hdata/ext1')][1]/atom:content/hdm:DocumentMetaData/hdm:PedigreeInfo/hdm:Author", doc);
     assertEquals(DummySectionDocumentImpl.TEST_AUTHOR, author);
   }
 

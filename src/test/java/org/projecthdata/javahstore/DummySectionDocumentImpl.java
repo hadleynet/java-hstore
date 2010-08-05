@@ -61,7 +61,7 @@ class DummySectionDocumentImpl implements SectionDocument {
   }
 
   public static final String TEST_AUTHOR = "Fred Bloggs";
-  private static final String TEST_METADATA = "<ns:DocumentMetaData xmlns:ns='http://projecthdata.org/hdata/schemas/2009/11/metadata'>"
+  private static final String TEST_METADATA = "<DocumentMetaData xmlns='http://projecthdata.org/hdata/schemas/2009/11/metadata'>"
           + "<PedigreeInfo>"
           + "<Author>"
           + TEST_AUTHOR
@@ -71,7 +71,7 @@ class DummySectionDocumentImpl implements SectionDocument {
           + "<RecordDate>"
           + "<CreatedDateTime>2006-05-04T18:13:51.0Z</CreatedDateTime>"
           + "</RecordDate>"
-          + "</ns:DocumentMetaData>";
+          + "</DocumentMetaData>";
 
   @Override
   public DocumentMetadata getMetadata() {

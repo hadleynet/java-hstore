@@ -51,7 +51,7 @@ public class DocumentMetadataTest {
   }
 
   private static final String TEST_AUTHOR = "Fred Bloggs";
-  private static final String TEST_METADATA = "<ns:DocumentMetaData xmlns:ns='http://projecthdata.org/hdata/schemas/2009/11/metadata'>"
+  private static final String TEST_METADATA = "<DocumentMetaData xmlns='http://projecthdata.org/hdata/schemas/2009/11/metadata'>"
           + "<PedigreeInfo>"
           + "<Author>"
           + TEST_AUTHOR
@@ -61,7 +61,7 @@ public class DocumentMetadataTest {
           + "<RecordDate>"
           + "<CreatedDateTime>2006-05-04T18:13:51.0Z</CreatedDateTime>"
           + "</RecordDate>"
-          + "</ns:DocumentMetaData>";
+          + "</DocumentMetaData>";
 
   /**
    * Test of getXml method, of class DocumentMetadata.
