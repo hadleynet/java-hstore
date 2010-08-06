@@ -90,17 +90,17 @@ public class SectionResource {
   }
 
   @POST
-  @Consumes("multipart/mixed")
+  @Consumes(MediaType.MULTIPART_FORM_DATA)
   public Response addDocumentWithMetadata(MultiPart multipart) throws IOException, ParserConfigurationException, SAXException {
     DocumentMetadata metadata = null;
     InputStream content = null;
     String mediaType = null;
     for (BodyPart part: multipart.getBodyParts()) {
       ContentDisposition cd = part.getContentDisposition();
-      if (cd.getFileName().equals("content")) {
+      if (cd.getParameters().get("name").equals("content")) {
         mediaType = part.getMediaType().toString();
         content = part.getEntityAs(InputStream.class);
-      } else if (cd.getFileName().equals("metadata")) {
+      } else if (cd.getParameters().get("name").equals("metadata")) {
         metadata = new DocumentMetadata(part.getEntityAs(String.class));
       }
     }
