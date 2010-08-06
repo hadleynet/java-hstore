@@ -89,6 +89,8 @@ public class SectionFeedWriter implements MessageBodyWriter<Section> {
       Link sectionLink = entry.addLink(sectionUri.toString());
       sectionLink.setMimeType(document.getMediaType());
       sectionLink.setRel("alternate");
+      entry.setEdited(document.getLastUpdated());
+      entry.setUpdated(document.getLastUpdated());
       entry.setId(sectionUri.toString());
       entry.setTitle(document.getPath());
       if (document.getMetadata() != null) {

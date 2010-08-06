@@ -30,6 +30,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.projecthdata.javahstore.hdr.Extension;
@@ -59,6 +60,9 @@ public class RecordResource {
 
   @Context
   private UriInfo uriInfo;
+
+  @Context
+  private Request request;
 
   @GET
   @Produces(MediaType.APPLICATION_ATOM_XML)
@@ -99,7 +103,7 @@ public class RecordResource {
   public Object findChild(@PathParam("segment") String segment) {
     Section childSection = hdr.getRootDocument().getRootSection().getChildSection(segment);
     if (childSection != null)
-      return new SectionResource(hdr, childSection, hdr.getRootDocument().getRootSection(), uriInfo);
+      return new SectionResource(hdr, childSection, hdr.getRootDocument().getRootSection(), uriInfo, request);
     throw new NotFoundException("Section "+segment+" not found");
   }
 

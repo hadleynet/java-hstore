@@ -33,6 +33,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.xml.parsers.ParserConfigurationException;
@@ -53,12 +54,14 @@ public class SectionResource {
   private Section section;
   private UriInfo uriInfo;
   private HDR hdr;
+  private Request request;
 
-  public SectionResource(HDR hdr, Section section, Section parent, UriInfo uriInfo) {
+  public SectionResource(HDR hdr, Section section, Section parent, UriInfo uriInfo, Request request) {
     this.hdr = hdr;
     this.section = section;
     this.parent = parent;
     this.uriInfo = uriInfo;
+    this.request = request;
   }
 
   @GET @Produces(MediaType.APPLICATION_ATOM_XML)
@@ -135,10 +138,10 @@ public class SectionResource {
   public Object findChild(@PathParam("segment") String segment) {
     Section childSection = section.getChildSection(segment);
     if (childSection != null)
-      return new SectionResource(hdr, childSection, section, uriInfo);
+      return new SectionResource(hdr, childSection, section, uriInfo, request);
     SectionDocument document = section.getChildDocument(segment);
     if (document != null)
-      return new DocumentResource(document, section);
+      return new DocumentResource(document, section, request);
     throw new NotFoundException("Section or document "+segment+" not found");
   }
 

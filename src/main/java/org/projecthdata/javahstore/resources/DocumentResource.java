@@ -25,7 +25,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import org.projecthdata.javahstore.hdr.DocumentMetadata;
 import org.projecthdata.javahstore.hdr.Section;
 import org.projecthdata.javahstore.hdr.SectionDocument;
@@ -38,19 +40,28 @@ public class DocumentResource {
 
   private SectionDocument document;
   private Section section;
+  private Request request;
 
-  public DocumentResource(SectionDocument document, Section section) {
+  public DocumentResource(SectionDocument document, Section section, Request request) {
     this.document = document;
     this.section = section;
+    this.request = request;
   }
 
   @GET
   public Response getDocument() {
-    return Response.ok(document.getContent(), document.getMediaType()).build();
+    ResponseBuilder rb = request.evaluatePreconditions(document.getLastUpdated());
+    if (rb!=null)
+      return rb.build(); // preconditions not met
+    return Response.ok(document.getContent(), document.getMediaType())
+            .lastModified(document.getLastUpdated()).build();
   }
 
   @PUT
   public Response updateDocument(@Context HttpHeaders headers, InputStream content) throws IOException {
+    ResponseBuilder rb = request.evaluatePreconditions(document.getLastUpdated());
+    if (rb!=null)
+      return rb.build(); // preconditions not met
     MediaType incoming = headers.getMediaType();
     MediaType existing = MediaType.valueOf(document.getMediaType());
     if (!incoming.isCompatible(existing)) {
@@ -66,6 +77,9 @@ public class DocumentResource {
   @POST
   @Consumes(MediaType.APPLICATION_XML)
   public Response updateMetadata(@Context HttpHeaders headers, String data) {
+    ResponseBuilder rb = request.evaluatePreconditions(document.getLastUpdated());
+    if (rb!=null)
+      return rb.build(); // preconditions not met
     DocumentMetadata metadata;
     try {
       metadata = new DocumentMetadata(data);
@@ -78,6 +92,9 @@ public class DocumentResource {
 
   @DELETE
   public Response deleteDocument() {
+    ResponseBuilder rb = request.evaluatePreconditions(document.getLastUpdated());
+    if (rb!=null)
+      return rb.build(); // preconditions not met
     section.deleteDocument(document);
     return Response.ok().build();
   }
