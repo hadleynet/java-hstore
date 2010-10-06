@@ -68,6 +68,7 @@ class DummySectionDocumentImpl implements SectionDocument {
           + "</Author>"
           + "</PedigreeInfo>"
           + "<DocumentId>xyzzy</DocumentId>"
+          + "<Title>The Title</Title>"
           + "<RecordDate>"
           + "<CreatedDateTime>2006-05-04T18:13:51.0Z</CreatedDateTime>"
           + "</RecordDate>"
